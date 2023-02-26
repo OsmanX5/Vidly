@@ -1,0 +1,14 @@
+﻿@model Vidly.Models.Movie
+<body>
+<h1>@Model.Name</h1>
+<li> Genra : @Model.Genre</li>
+@if (@Model.ReleaseDate != null)
+{
+		<li>Relase date :@Model.ReleaseDate</li>
+}
+@if (@Model.addingDate != null)
+{
+		<li>adding date :@Model.addingDate</li>
+}
+<li>Number in stock :@Model.NumberInStock</li>
+</body>

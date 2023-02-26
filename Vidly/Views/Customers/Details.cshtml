@@ -1,0 +1,14 @@
+﻿@model Vidly.Models.Customer
+<body>
+<h1>
+	@Model.Name
+</h1>
+
+		@if (Model.Birthdate != null)
+		{
+			<h1>BirthDate :@Model.Birthdate</h1>
+
+		}
+<h2> @Model.MemberShipType.name</h2>
+
+</body>

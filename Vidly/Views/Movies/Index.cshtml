@@ -1,0 +1,45 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model List<Vidly.Models.Movie>
+
+<body>
+<h1>
+	Movies
+</h1>
+	@if (Model.Count == 0)
+	{
+		<p>
+			There is no Movie
+		</p>
+	}
+<table class>
+	<thead>
+	<tr>
+		<td>ID</td><td> Name</td><td>Genra</td>
+	</tr>
+	</thead>
+	<tbody>
+			@foreach (var movie in @Model)
+			{
+			<tr>
+				<td>
+						@movie.Id
+				</td>
+				<td>
+					<a href="/Movies/Details/@movie.Id">
+							@movie.Name
+					</a>
+				</td>
+				<td>
+						@movie.Genre
+				</td>
+			</tr>
+			}
+	</tbody>
+</table>
+
+</body>
+
