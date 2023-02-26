@@ -46,8 +46,6 @@
                     })
                 .PrimaryKey(t => t.Id);
             
-            DropTable("dbo.CustomersModels");
-            DropTable("dbo.MovieModels");
         }
         
         public override void Down()

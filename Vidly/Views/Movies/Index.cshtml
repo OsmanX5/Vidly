@@ -15,6 +15,9 @@
 			There is no Movie
 		</p>
 	}
+	<button onclick="window.location.href='/Movies/NewMovie';">
+		Add Movie
+</button>
 <table class>
 	<thead>
 	<tr>
@@ -29,9 +32,8 @@
 						@movie.Id
 				</td>
 				<td>
-					<a href="/Movies/Details/@movie.Id">
-							@movie.Name
-					</a>
+					@Html.ActionLink(@movie.Name,"Edit","Movies",new {id = movie.Id})
+							
 				</td>
 				<td>
 						@movie.Genre

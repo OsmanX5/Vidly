@@ -18,5 +18,30 @@ namespace Vidly.Controllers
 			Movie movie = db.Movies.Find(id);
 			return View(movie);
 		}
+		public IActionResult NewMovie()
+		{
+			return View("Form");
+		}
+		public IActionResult Edit(int id)
+		{
+			Movie movie = db.Movies.Single(x => x.Id == id);
+			return View("Form",movie);
+		}
+
+		public IActionResult Save(Movie movie)
+		{
+			if (movie.Id == 0)db.Movies.Add(movie);
+			else
+			{
+				Movie movieInDB = db.Movies.Single(x => x.Id == movie.Id);
+				movieInDB.Name = movie.Name;
+				movieInDB.NumberInStock = movie.NumberInStock;
+				movieInDB.ReleaseDate = movie.ReleaseDate;
+				movieInDB.addingDate = movie.addingDate;
+				movieInDB.Genre = movie.Genre;
+			}
+			db.SaveChanges();
+			return RedirectToAction("Index");
+		}
 	}
 }
