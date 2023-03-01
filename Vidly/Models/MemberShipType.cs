@@ -1,4 +1,6 @@
-﻿namespace Vidly.Models
+﻿using System.Data.Entity.Core.Common.CommandTrees;
+
+namespace Vidly.Models
 {
 	public class MemberShipType
 	{
@@ -7,6 +9,10 @@
 		public short SignUpFee { get; set; }
 		public byte DurationInMonths { get; set; }
 		public byte DiscountRate { get; set; }
+
+		public static readonly int UnKnown = 0;
+		public static readonly int Basic = 1;
 		
+
 	}
 }

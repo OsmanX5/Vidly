@@ -4,13 +4,16 @@
 
 
 @using (Html.BeginForm("Save","Customers")){
+	@Html.ValidationSummary()
 	<div class="form-group">
 		@Html.LabelFor( m=>m.Customer.Name )
 		@Html.TextBoxFor(m=>m.Customer.Name,new {@class= "form-control"} )
+		@Html.ValidationMessageFor(m =>m.Customer.Name)
 	</div>
 	<div class="form-group">
 		@Html.LabelFor( m=>m.Customer.Birthdate )
-		@Html.TextBoxFor(m=>m.Customer.Birthdate,"{0:d/m/yyyy}",new {@class= "form-control"} )
+		@Html.TextBoxFor(m=>m.Customer.Birthdate,"{0:d MMM yyyy}",new {@class= "form-control"} )
+		@Html.ValidationMessageFor(m =>m.Customer.Birthdate)
 	</div>
 
 	<div class="form-group">
@@ -19,6 +22,7 @@
 			new SelectList(Model.MemberShipTypes, "Id", "name"),
 			"Select membership"
 			)
+		@Html.ValidationMessageFor(m =>m.Customer.MemberShipTypeId)
 	</div>
 	<div class="form-check">
 		<label>
@@ -29,5 +33,4 @@
 		@Html.HiddenFor(m =>m.Customer.Id)
 	</div>
 	<button type="submit" class="btn btn-primary"> Submit </button>
-
 }

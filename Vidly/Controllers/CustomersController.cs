@@ -42,6 +42,7 @@ namespace Vidly.Controllers
 	        var memberShips = db.MemberShipTypes.ToList();
 			var viewModel = new CustomerFormViewModel
 			{
+                Customer = new Customer(),
 				MemberShipTypes = memberShips
 			};
 			return View("Form", viewModel);
@@ -60,6 +61,18 @@ namespace Vidly.Controllers
         [HttpPost]
         public IActionResult Save( Customer customer)
         {
+	        customer.MemberShipType = db.MemberShipTypes.Single(x => x.Id == customer.MemberShipTypeId);
+	        if (!ModelState.IsValid)
+	        {
+				Console.WriteLine("ModelState is not valid");
+				CustomerFormViewModel temp = new CustomerFormViewModel
+				{
+					Customer = customer,
+					MemberShipTypes = db.MemberShipTypes.ToList()
+				};
+				return View("Form", temp);
+	        }
+                
             if(customer.Id ==0 )
 				db.Customers.Add(customer);
             else
