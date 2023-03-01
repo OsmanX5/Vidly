@@ -22,10 +22,10 @@ namespace Vidly.Controllers
             _logger = logger;
             db = new MyDB();
 		}
-
+        [Route("Customers")]
         public IActionResult Index()
         {
-
+            Console.WriteLine("calling customer");
 			List<Customer> Customers = db.Customers.Include(x => x.MemberShipType).ToList();
 			return View(Customers);
         }
@@ -61,7 +61,6 @@ namespace Vidly.Controllers
         [HttpPost]
         public IActionResult Save( Customer customer)
         {
-	        customer.MemberShipType = db.MemberShipTypes.Single(x => x.Id == customer.MemberShipTypeId);
 	        if (!ModelState.IsValid)
 	        {
 				Console.WriteLine("ModelState is not valid");

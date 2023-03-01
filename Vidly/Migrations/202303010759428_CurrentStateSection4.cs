@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class current : DbMigration
+    public partial class CurrentStateSection4 : DbMigration
     {
         public override void Up()
         {
@@ -12,14 +12,14 @@
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
+                        Name = c.String(nullable: false, maxLength: 255),
                         IsSubscribedToNewsletter = c.Boolean(nullable: false),
                         Birthdate = c.DateTime(),
-                        MemberShipType_Id = c.Int(),
+                        MemberShipTypeId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MemberShipTypes", t => t.MemberShipType_Id)
-                .Index(t => t.MemberShipType_Id);
+                .ForeignKey("dbo.MemberShipTypes", t => t.MemberShipTypeId, cascadeDelete: true)
+                .Index(t => t.MemberShipTypeId);
             
             CreateTable(
                 "dbo.MemberShipTypes",
@@ -34,43 +34,39 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.MovieGenres",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
                 "dbo.Movies",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(),
-                        Genre = c.String(),
-                        ReleaseDate = c.DateTime(nullable: false),
-                        addingDate = c.DateTime(nullable: false),
+                        MovieGenreId = c.Int(nullable: false),
+                        ReleaseDate = c.DateTime(),
+                        addingDate = c.DateTime(),
                         NumberInStock = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.MovieGenres", t => t.MovieGenreId, cascadeDelete: true)
+                .Index(t => t.MovieGenreId);
             
         }
         
         public override void Down()
         {
-            CreateTable(
-                "dbo.MovieModels",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            CreateTable(
-                "dbo.CustomersModels",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                    })
-                .PrimaryKey(t => t.Id);
-            
-            DropForeignKey("dbo.Customers", "MemberShipType_Id", "dbo.MemberShipTypes");
-            DropIndex("dbo.Customers", new[] { "MemberShipType_Id" });
+            DropForeignKey("dbo.Movies", "MovieGenreId", "dbo.MovieGenres");
+            DropForeignKey("dbo.Customers", "MemberShipTypeId", "dbo.MemberShipTypes");
+            DropIndex("dbo.Movies", new[] { "MovieGenreId" });
+            DropIndex("dbo.Customers", new[] { "MemberShipTypeId" });
             DropTable("dbo.Movies");
+            DropTable("dbo.MovieGenres");
             DropTable("dbo.MemberShipTypes");
             DropTable("dbo.Customers");
         }

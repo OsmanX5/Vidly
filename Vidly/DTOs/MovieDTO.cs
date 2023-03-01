@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Vidly.Models;
 
-namespace Vidly.Models
+namespace Vidly.DTOs
 {
-	public class Movie
+	public class MovieDTO
 	{
 		public int Id { get; set; }
 		[Required] public string Name { get; set; } = "";
-		public MovieGenre? MovieGenre { get; set; }
 		public int MovieGenreId { get; set; }
 
 		public DateTime? ReleaseDate { get; set; } = DateTime.Today;

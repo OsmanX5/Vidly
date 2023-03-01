@@ -10,11 +10,18 @@ namespace Vidly.Controllers
 	
 	public class MoviesController : Controller
 	{
-		MyDB db = new MyDB();
+		MyDB db ;
 
+		public MoviesController()
+		{
+			db = new MyDB();
+		}
+		[Route("Movies")]
 		public IActionResult Index()
 		{
+			Console.WriteLine("index movies");
 			var movies = db.Movies.Include(s => s.MovieGenre).ToList();
+			Console.WriteLine(movies.Count);
 			return View(movies);
 		}
 		[Route("Movies/details/{id}")]
@@ -27,7 +34,7 @@ namespace Vidly.Controllers
 		{
 			MovieViewModel movieViewModel = new MovieViewModel();
 			movieViewModel.MovieGenres = db.MovieGenres.ToList();
-
+			movieViewModel.Movie = new Movie();
 			return View("Form", movieViewModel);
 		}
 		public IActionResult Edit(int id)
@@ -43,9 +50,19 @@ namespace Vidly.Controllers
 
 		public IActionResult Save(Movie movie)
 		{
+			
+			if (!ModelState.IsValid)
+			{
+				MovieViewModel movieViewModel = new MovieViewModel
+				{
+					MovieGenres = db.MovieGenres.ToList(),
+					Movie = movie
+				};
+				return View("Form", movieViewModel);
+			}
 			if (movie.Id == 0)
 			{
-				MovieGenre gen = db.MovieGenres.Single(x => x.Id == movie.MovieGenre.Id);
+				MovieGenre gen = db.MovieGenres.Single(x => x.Id == movie.MovieGenreId);
 				movie.MovieGenre = gen;
 				db.Movies.Add(movie);
 			}
