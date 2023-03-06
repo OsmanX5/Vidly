@@ -8,6 +8,7 @@ namespace Vidly.Models
 		public DbSet<Movie> Movies { get; set; }
 		public DbSet<MemberShipType> MemberShipTypes { get; set; }
 		public DbSet<MovieGenre> MovieGenres { get; set; }
+		public DbSet<Rental> Rentals { get; set; }
 	}
 
 }
